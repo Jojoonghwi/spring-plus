@@ -70,6 +70,7 @@ class TodoControllerTest {
 
         // then
         mockMvc.perform(get("/todos/{todoId}", todoId))
+            //필수 Lv1-4
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.status").value(HttpStatus.NOT_FOUND.name()))
                 .andExpect(jsonPath("$.code").value(HttpStatus.NOT_FOUND.value()))
