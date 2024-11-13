@@ -36,10 +36,13 @@ public class AuthService {
 
         UserRole userRole = UserRole.of(signupRequest.getUserRole());
 
+        String nickname = signupRequest.getNickname();
+
         User newUser = new User(
                 signupRequest.getEmail(),
                 encodedPassword,
-                userRole
+                userRole,
+                nickname
         );
         User savedUser = userRepository.save(newUser);
 
@@ -60,6 +63,6 @@ public class AuthService {
         String bearerToken = jwtUtil.createToken(user.getId(), user.getEmail(), user.getUserRole());
         jwtUtil.addJwtToCookie(bearerToken, response);
 
-        return new SigninResponse(bearerToken);
+        return new SigninResponse(bearerToken, user.getNickname());
     }
 }
