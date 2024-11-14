@@ -39,5 +39,7 @@ out/
 ### properties ###
 *.properties
 
+.DS_Store
+
 ### Qclass ###
 /src/main/generated/
