@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.entity.Timestamped;
 import org.example.expert.domain.user.enums.UserRole;
-import org.example.expert.security.CustomAuthUser;
+import org.example.expert.security.UserDetailsImpl;
 
 @Getter
 @Entity
@@ -21,7 +21,6 @@ public class User extends Timestamped {
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    //필수 Lv1-2
     private String nickname;
 
     public User(String email, String password, UserRole userRole, String nickname) {
@@ -38,7 +37,7 @@ public class User extends Timestamped {
         this.nickname = nickname;
     }
 
-    public static User fromAuthUser(CustomAuthUser authUser) {
+    public static User fromAuthUser(UserDetailsImpl authUser) {
         return new User(authUser.getUser().getId(), authUser.getUser().getEmail(), authUser.getUser().getUserRole(), authUser.getUser().getNickname());
     }
 

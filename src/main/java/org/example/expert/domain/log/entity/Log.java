@@ -2,8 +2,6 @@ package org.example.expert.domain.log.entity;
 
 import java.time.LocalDateTime;
 
-import org.example.expert.domain.common.entity.Timestamped;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

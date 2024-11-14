@@ -1,11 +1,9 @@
 package org.example.expert.domain.manager.service;
 
-import lombok.RequiredArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
-import org.example.expert.domain.log.entity.Log;
-import org.example.expert.domain.log.repository.LogRepository;
 import org.example.expert.domain.log.service.LogService;
 import org.example.expert.domain.manager.dto.request.ManagerSaveRequest;
 import org.example.expert.domain.manager.dto.response.ManagerResponse;
@@ -17,14 +15,13 @@ import org.example.expert.domain.todo.repository.TodoRepository;
 import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.repository.UserRepository;
-import org.example.expert.security.CustomAuthUser;
+import org.example.expert.security.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +35,7 @@ public class ManagerService {
 
     //도전 Lv3-11 Transaction 심화
     @Transactional(rollbackFor = Exception.class)
-    public ManagerSaveResponse saveManager(CustomAuthUser authUser, long todoId, ManagerSaveRequest managerSaveRequest) {
+    public ManagerSaveResponse saveManager(UserDetailsImpl authUser, long todoId, ManagerSaveRequest managerSaveRequest) {
         // 일정을 만든 유저
         User user = User.fromAuthUser(authUser);
 
@@ -93,7 +90,7 @@ public class ManagerService {
     }
 
     @Transactional
-    public void deleteManager(CustomAuthUser authUser, long todoId, long managerId) {
+    public void deleteManager(UserDetailsImpl authUser, long todoId, long managerId) {
         User user = User.fromAuthUser(authUser);
 
         Todo todo = todoRepository.findById(todoId)

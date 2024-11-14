@@ -16,13 +16,13 @@ public class TodoResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
-    public TodoResponse(Long id, String title, String contents, String weather, UserResponse user, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public TodoResponse(Long id, String title, String contents, String weather, UserResponse user) {
         this.id = id;
         this.title = title;
         this.contents = contents;
         this.weather = weather;
         this.user = user;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
 }
