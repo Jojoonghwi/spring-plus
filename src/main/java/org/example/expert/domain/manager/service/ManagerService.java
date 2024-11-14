@@ -1,10 +1,13 @@
 package org.example.expert.domain.manager.service;
 
 import lombok.RequiredArgsConstructor;
+
+import org.example.expert.config.PasswordEncoder;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.log.entity.Log;
 import org.example.expert.domain.log.repository.LogRepository;
+import org.example.expert.domain.log.service.LogService;
 import org.example.expert.domain.manager.dto.request.ManagerSaveRequest;
 import org.example.expert.domain.manager.dto.response.ManagerResponse;
 import org.example.expert.domain.manager.dto.response.ManagerSaveResponse;
@@ -31,10 +34,10 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
-    private final LogRepository logRepository;
+    private final LogService logService;
 
     //도전 Lv3-11 Transaction 심화
-    @Transactional(rollbackFor = Exception.class, noRollbackFor = InvalidRequestException.class)
+    @Transactional(rollbackFor = Exception.class)
     public ManagerSaveResponse saveManager(AuthUser authUser, long todoId, ManagerSaveRequest managerSaveRequest) {
         // 일정을 만든 유저
         User user = User.fromAuthUser(authUser);
@@ -46,6 +49,7 @@ public class ManagerService {
         });
 
         if (todo.getUser() == null || !ObjectUtils.nullSafeEquals(user.getId(), todo.getUser().getId())) {
+            //logService.
             saveLog("담당자를 등록하려고 하는 유저가 유효하지 않거나, 일정을 만든 유저가 아닙니다.", false, user.getId(), todoId);
             throw new InvalidRequestException("담당자를 등록하려고 하는 유저가 유효하지 않거나, 일정을 만든 유저가 아닙니다.");
         }
@@ -64,6 +68,7 @@ public class ManagerService {
         Manager newManagerUser = new Manager(managerUser, todo);
         Manager savedManagerUser = managerRepository.save(newManagerUser);
         saveLog("매니저 등록에 성공했습니다", true, user.getId(), todoId);
+
         return new ManagerSaveResponse(
                 savedManagerUser.getId(),
                 new UserResponse(managerUser.getId(), managerUser.getEmail(), managerUser.getNickname())
@@ -108,9 +113,9 @@ public class ManagerService {
         managerRepository.delete(manager);
     }
 
+    //로그 저장
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveLog(String Msg, boolean isSuccessful, Long userId, Long todoId) {
-        Log log = new Log(Msg, isSuccessful, userId, todoId);
-        logRepository.save(log);
+        logService.saveLog(Msg, isSuccessful, userId, todoId);
     }
 }
