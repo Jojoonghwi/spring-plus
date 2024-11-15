@@ -3,7 +3,7 @@ package org.example.expert.domain.todo.controller;
 import java.time.LocalDateTime;
 
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
-import org.example.expert.domain.todo.dto.response.TodoKeywordRespose;
+import org.example.expert.domain.todo.dto.response.TodoKeywordResponse;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
 import org.example.expert.domain.todo.service.TodoService;
@@ -53,7 +53,7 @@ public class TodoController {
     }
 
     @GetMapping("/todos/keyword")
-    public ResponseEntity<Page<TodoKeywordRespose>> getTodosKeyword(
+    public ResponseEntity<Page<TodoKeywordResponse>> getTodosKeyword(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(required = false) String titleKeyword,
