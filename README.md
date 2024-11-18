@@ -134,22 +134,17 @@
       - `README.md` 에 각 방법별 실행 결과를 비교할 수 있도록 최초 조회 속도와 개선 과정 별 조회 속도를 확인할 수 있는 표 혹은 이미지를 첨부해주세요.
 
 
-- [ ] Level 4 Kotlin 적용하기 (파일 혹은 특정 클래스)
+## Level 4 Kotlin 적용하기 (파일 혹은 특정 클래스)
 
-    #### 들어가기 전에, Kotlin 전환 간 주의사항
+- [ ] **14. Entity 및 Repository CRUD 리팩토링(Kotlin)**
 
-  -   **Kotlin nullable <-> Java Optional**
-      -   Java와 Kotlin을 혼용하여 사용하는 구간에 문제가 발생될 수 있습니다.
-      -   기존 Java에서 Optional로 선언되어 있던 타입을 Kotlin의 Nullable 타입으로 수정 시
-          -   Java에서 이를 사용 할 때, `Optional.ofNullable()`로 감싸야하는 필요성
-  -   **Kotlin은 일단 final**
-      -   Kotlin 코드는 기본적으로 `final`임에 주의!
-      -   테스트를 진행할 때 Java 라이브러리로는 Kotlin 코드의 Mocking이 불가능
-          -   이를 가능하게 해주는 `springmockk` 혹은 `mockito-kotlin` 라이브러리를 사용하는 것을 추천
+  - Java로 작성된 Entity 및 CRUD 메서드를 Kotlin으로 리팩토링
+      - 프로젝트 세팅 후 Entity, CRUD 요소를 “작게” 리팩토링해봅니다.
 
   - Nullable 및 Non-Nullable 필드를 정확히 정의하고 데이터 클래스 사용할 것
-  - 기본 생성자 및 데이터 클래스에서의 `copy()` 메서드 활용할 것
-  - 기본 `CrudRepository` 또는 `JpaRepository`를 사용할 것
-  - QueryDSL을 활용할 것
-  - Lombok을 사용했다면, Kotlin의 기본 기능으로 대체할 것
-      - ex) 단순 getter, setter 메서드 생성
+    - Nullable 및 Non-Nullable 필드를 정확히 정의하고 데이터 클래스 사용할 것
+    - 기본 생성자 및 데이터 클래스에서의 `copy()` 메서드 활용할 것
+    - 기본 `CrudRepository` 또는 `JpaRepository`를 사용할 것
+    - QueryDSL을 활용할 것
+    - Lombok을 사용했다면, Kotlin의 기본 기능으로 대체할 것
+        - ex) 단순 getter, setter 메서드 생성
