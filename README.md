@@ -5,10 +5,8 @@
 ## Level. 1
 - [x] **1. 코드 개선 퀴즈 - @Transactional의 이해**
 
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/34d42dcb-7d2a-4f20-96d2-5487ae2a2928/image.png)
   - 할 일 저장 기능을 구현한 API(`/todos`)를 호출할 때, 아래와 같은 에러가 발생하고 있어요.
 
-   ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/e70cf554-ee20-4fce-8910-2d8440253199/image.png)
   - 에러가 발생하지 않고 정상적으로 할 일을 저장 할 수 있도록 코드를 수정해주세요.
 
 
@@ -21,27 +19,19 @@
 
 - [x] **3. 코드 개선 퀴즈 - AOP의 이해**
 
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/228d9688-ea86-4dec-876b-9752689ab44f/image.png)
-
   - `UserAdminController` 클래스의 `changeUserRole()` 메소드가 실행 전 동작해야해요.
   - `AdminAccessLoggingAspect` 클래스에 있는 AOP가 개발 의도에 맞도록 코드를 수정해주세요.
 
 
 - [x] **4. 테스트 코드 퀴즈 - 컨트롤러 테스트의 이해**
 
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/e03201f2-47b3-4afc-beb7-6c2fbab8bc2b/image.png)
-
   - 테스트 패키지 `org.example.expert.domain.todo.controller`의
     `todo_단건_조회_시_todo가_존재하지_않아_예외가_발생한다()` 테스트가 실패하고 있어요.
-
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/e7342cca-35d7-45ec-95bf-a7702a35bc4f/image.png)
 
   - 테스트가 정상적으로 수행되어 통과할 수 있도록 테스트 코드를 수정해주세요.
 
 
 - [x] **5. 코드 개선 퀴즈 -  JPA의 이해**
-
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/21a01448-eb2a-4e85-8ca0-cbe285a76376/image.png)
 
   - 할 일 검색 시 `weather` 조건으로도 검색할 수 있어야해요.
       - `weather` 조건은 있을 수도 있고, 없을 수도 있어요!
@@ -54,26 +44,18 @@
 
 - [x] **6. JPA Cascade**
 
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/2ae0fb49-2098-4425-92f8-f2c9d610b70e/image.png)
-
   - 할 일을 새로 저장할 시, 할 일을 생성한 유저는 담당자로 자동 등록되어야 합니다.
   - JPA의 `cascade` 기능을 활용해 할 일을 생성한 유저가 담당자로 등록될 수 있게 해주세요.
 
     
 - [x] **7. N+1**
 
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/2315b8db-7f83-4984-8599-8c1079151444/image.png)
-
   - `CommentController` 클래스의 `getComments()` API를 호출할 때 N+1 문제가 발생하고 있어요. N+1 문제란, 데이터베이스 쿼리 성능 저하를 일으키는 대표적인 문제 중 하나로, 특히 연관된 엔티티를 조회할 때 발생해요.
   - 해당 문제가 발생하지 않도록 코드를 수정해주세요.
   - N+1 로그
 
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/ddbe17ea-386d-4426-9eef-b18e6dd3acfd/image.png)
-
 
 - [x] **8. QueryDSL**
-
-    ![TodoService.getTodo 메소드](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/21df06d6-a203-4ca0-ab92-88d1e79aad11/image.png)
 
   - JPQL로 작성된 `findByIdWithUser` 를 QueryDSL로 변경합니다.
   - 7번과 마찬가지로 N+1 문제가 발생하지 않도록 유의해 주세요!
@@ -92,7 +74,6 @@
 
 - [x] **10. QueryDSL 을 사용하여 검색 기능 만들기**
 
-
   - 새로운 API로 만들어주세요.
   - 검색 조건은 다음과 같아요.
       - 검색 키워드로 일정의 제목을 검색할 수 있어요.
@@ -109,7 +90,6 @@
 
 
 - [x] **11. Transaction 심화**
-
 
   - 매니저 등록 요청을 기록하는 로그 테이블을 만들어주세요.
       - DB 테이블명: `log`
@@ -156,16 +136,16 @@
 
 - [ ] Level 4 Kotlin 적용하기 (파일 혹은 특정 클래스)
 
-    ### 들어가기 전에, Kotlin 전환 간 주의사항
+    #### 들어가기 전에, Kotlin 전환 간 주의사항
 
-  - [ ]  **Kotlin nullable <-> Java Optional**
-      - [ ]  Java와 Kotlin을 혼용하여 사용하는 구간에 문제가 발생될 수 있습니다.
-      - [ ]  기존 Java에서 Optional로 선언되어 있던 타입을 Kotlin의 Nullable 타입으로 수정 시
-          - [ ]  Java에서 이를 사용 할 때, `Optional.ofNullable()`로 감싸야하는 필요성
-  - [ ]  **Kotlin은 일단 final**
-      - [ ]  Kotlin 코드는 기본적으로 `final`임에 주의!
-      - [ ]  테스트를 진행할 때 Java 라이브러리로는 Kotlin 코드의 Mocking이 불가능
-          - [ ]  이를 가능하게 해주는 `springmockk` 혹은 `mockito-kotlin` 라이브러리를 사용하는 것을 추천
+  -   **Kotlin nullable <-> Java Optional**
+      -   Java와 Kotlin을 혼용하여 사용하는 구간에 문제가 발생될 수 있습니다.
+      -   기존 Java에서 Optional로 선언되어 있던 타입을 Kotlin의 Nullable 타입으로 수정 시
+          -   Java에서 이를 사용 할 때, `Optional.ofNullable()`로 감싸야하는 필요성
+  -   **Kotlin은 일단 final**
+      -   Kotlin 코드는 기본적으로 `final`임에 주의!
+      -   테스트를 진행할 때 Java 라이브러리로는 Kotlin 코드의 Mocking이 불가능
+          -   이를 가능하게 해주는 `springmockk` 혹은 `mockito-kotlin` 라이브러리를 사용하는 것을 추천
 
   - Nullable 및 Non-Nullable 필드를 정확히 정의하고 데이터 클래스 사용할 것
   - 기본 생성자 및 데이터 클래스에서의 `copy()` 메서드 활용할 것
