@@ -24,14 +24,4 @@ public interface TodoRepository extends JpaRepository<Todo, Long>, CustomTodoRep
         @Param("startDate") LocalDateTime startDate,
         @Param("endDate") LocalDateTime endDate,
         Pageable pageable);
-    //
-    // @Query("SELECT t FROM Todo t " +
-    //         "LEFT JOIN t.user " +
-    //         "WHERE t.id = :todoId")
-    // Optional<Todo> findByIdWithUser(@Param("todoId") Long todoId);
-
-    Page<Todo> findByTitleContainingOrUser_NicknameContainingOrderByCreatedAtDesc(
-        Pageable pageable,
-        @Param("titleKeyword") String titleKeyword,
-        @Param("nickNameKeyword") String nickNameKeyword);
 }

@@ -86,16 +86,16 @@ public class TodoService {
 	public Page<TodoKeywordResponse> getTodosKeyword(int page, int size, String titleKeyword, String nickNameKeyword) {
         Pageable pageable = PageRequest.of(page - 1, size);
 
-        Page<Todo> todoPage = todoRepository.findByTitleContainingOrUser_NicknameContainingOrderByCreatedAtDesc(pageable, titleKeyword, nickNameKeyword);
+        Page<TodoKeywordResponse> todoKeywordResposes = todoRepository.findByTodoWithKeyword(pageable, titleKeyword, nickNameKeyword);
 
-        List<TodoKeywordResponse> todoKeywordResposes = todoPage.getContent().stream()
-            .map(todo -> new TodoKeywordResponse(
-                todo.getId(),
-                todo.getTitle() ,
-                todo.getManagers().size(),
-                todo.getComments().size()))
-            .toList();
+        // List<TodoKeywordResponse> todoKeywordResposes = todoPage.getContent().stream()
+        //     .map(todo -> new TodoKeywordResponse(
+        //         todo.getId(),
+        //         todo.getTitle() ,
+        //         todo.getManagers().size(),
+        //         todo.getComments().size()))
+        //     .toList();
 
-        return new PageImpl<>(todoKeywordResposes, pageable, todoPage.getTotalElements());
+        return todoKeywordResposes;
 	}
 }
