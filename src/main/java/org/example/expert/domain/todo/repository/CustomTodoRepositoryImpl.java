@@ -1,5 +1,7 @@
 package org.example.expert.domain.todo.repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +18,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
@@ -47,6 +48,52 @@ public class CustomTodoRepositoryImpl implements CustomTodoRepository{
 
 		return Optional.ofNullable(todo);
 	}
+
+	//필수 Lv1-5 쿼리DSL로 변경
+	// @Override
+	// public Page<Todo> findByCondition(
+	// 	@Param("weather") String weather,
+	// 	@Param("startDate") LocalDateTime startDate,
+	// 	@Param("endDate") LocalDateTime endDate,
+	// 	Pageable pageable)
+	// {
+	// 	BooleanBuilder conditions = new BooleanBuilder();
+	//
+	// 	if(weather != null && !weather.isEmpty()) {
+	// 		conditions.and(qTodo.weather.eq(weather));
+	// 	}
+	//
+	// 	if(startDate != null) {
+	// 		conditions.and(qTodo.modifiedAt.goe(startDate));
+	// 	}
+	//
+	// 	if(endDate != null) {
+	// 		conditions.and(qTodo.modifiedAt.loe(endDate));
+	// 	}
+	//
+	// 	List<Todo> todos = jpaQueryFactory
+	// 		.selectFrom(qTodo)
+	// 		.leftJoin(qTodo.user, qUser).fetchJoin()
+	// 		.where(conditions)
+	// 		.orderBy(qTodo.modifiedAt.desc())
+	// 		.offset(pageable.getOffset())
+	// 		.limit(pageable.getPageSize())
+	// 		.fetch();
+	//
+	// 	// 전체 데이터 수 카운트
+	// 	Long count = jpaQueryFactory
+	// 		.select(qTodo.count())
+	// 		.from(qTodo)
+	// 		.leftJoin(qTodo.user, qUser)
+	// 		.where(conditions)
+	// 		.fetchOne();
+	//
+	// 	if(count == null) {
+	// 		count = 0L;
+	// 	}
+	//
+	// 	return new PageImpl<>(todos, pageable, count);
+	// }
 
 	@Override
 	public Page<TodoKeywordResponse> findByTodoWithKeyword(
@@ -82,13 +129,17 @@ public class CustomTodoRepositoryImpl implements CustomTodoRepository{
 			.fetch();
 
 		// 전체 데이터 수 카운트
-		Long count = Optional.ofNullable(
-			jpaQueryFactory.select(qTodo.count())
-				.from(qTodo)
-				.leftJoin(qTodo.user, qUser)
-				.where(conditions)
-				.fetchOne()
-		).orElse(0L);
+		Long count = jpaQueryFactory
+			.select(qTodo.count())
+			.from(qTodo)
+			.leftJoin(qTodo.user, qUser)
+			.where(conditions)
+			.fetchOne();
+
+		if(count == null) {
+			count = 0L;
+		}
+
 
 		// Page 객체 생성
 		return new PageImpl<>(results, pageable, count);

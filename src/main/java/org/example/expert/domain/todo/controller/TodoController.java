@@ -1,5 +1,6 @@
 package org.example.expert.domain.todo.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
@@ -41,8 +42,8 @@ public class TodoController {
         @RequestParam(defaultValue = "10") int size,
         //필수 Lv1-5
         @RequestParam(required = false) String weather,
-        @RequestParam(required = false) LocalDateTime startDate,
-        @RequestParam(required = false) LocalDateTime endDate
+        @RequestParam(required = false) LocalDate startDate,
+        @RequestParam(required = false) LocalDate endDate
     ) {
         return ResponseEntity.ok(todoService.getTodos(page, size, weather, startDate, endDate));
     }

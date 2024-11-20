@@ -1,7 +1,7 @@
 package org.example.expert.domain.todo.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.example.expert.client.WeatherClient;
 import org.example.expert.domain.common.exception.InvalidRequestException;
@@ -15,7 +15,6 @@ import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.security.UserDetailsImpl;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -54,10 +53,14 @@ public class TodoService {
         );
     }
 
-    public Page<TodoResponse> getTodos(int page, int size, String weather, LocalDateTime startDate, LocalDateTime endDate) {
+    public Page<TodoResponse> getTodos(int page, int size, String weather, LocalDate startDate, LocalDate endDate) {
         Pageable pageable = PageRequest.of(page - 1, size);
 
-        Page<Todo> todos = todoRepository.findByCondition(weather, startDate, endDate, pageable);
+        //LocalDateTime 변환
+        LocalDateTime startDateTime = (startDate != null) ? startDate.atStartOfDay() : null;
+        LocalDateTime endDateTime = (endDate != null) ? endDate.atTime(23, 59, 59) : null;
+
+        Page<Todo> todos = todoRepository.findByCondition(weather, startDateTime, endDateTime, pageable);
 
         return todos.map(todo -> new TodoResponse(
                 todo.getId(),
@@ -83,18 +86,11 @@ public class TodoService {
         );
     }
 
+    //도전 Lv3-10
 	public Page<TodoKeywordResponse> getTodosKeyword(int page, int size, String titleKeyword, String nickNameKeyword) {
         Pageable pageable = PageRequest.of(page - 1, size);
 
         Page<TodoKeywordResponse> todoKeywordResposes = todoRepository.findByTodoWithKeyword(pageable, titleKeyword, nickNameKeyword);
-
-        // List<TodoKeywordResponse> todoKeywordResposes = todoPage.getContent().stream()
-        //     .map(todo -> new TodoKeywordResponse(
-        //         todo.getId(),
-        //         todo.getTitle() ,
-        //         todo.getManagers().size(),
-        //         todo.getComments().size()))
-        //     .toList();
 
         return todoKeywordResposes;
 	}
