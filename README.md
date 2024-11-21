@@ -1,6 +1,8 @@
 # SPRING PLUS
 - JPA 성능 최적화, QueryDSL을 활용한 동적 쿼리 작성, 스프링 시큐리티등 실무에서 자주 사용되는 패턴과 기술을 학습하며, AWS의 다양한 서비스를 학습
 
+- 트러블슈팅 : https://velog.io/@dumbo/플러스-주차-트러블슈팅
+
 ## 3️⃣ 필수 기능
 ## Level. 1
 - [x] **1. 코드 개선 퀴즈 - @Transactional의 이해**
