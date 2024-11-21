@@ -36,6 +36,7 @@ public class CustomTodoRepositoryImpl implements CustomTodoRepository{
 	QComment qComment = QComment.comment;
 	QManager qManager = QManager.manager;
 
+	//필수 Lv2-8 QueryDSL
 	@Override
 	public Optional<Todo> findByIdWithUser(@Param("todoId") Long todoId) {
 
