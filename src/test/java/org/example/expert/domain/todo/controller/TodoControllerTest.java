@@ -1,5 +1,9 @@
 package org.example.expert.domain.todo.controller;
 
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
@@ -7,21 +11,19 @@ import org.example.expert.domain.todo.service.TodoService;
 import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.enums.UserRole;
+import org.example.expert.security.UserDetailsImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
-
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@WebMvcTest(TodoController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+//@WebMvcTest(TodoController.class)
 class TodoControllerTest {
 
     @Autowired
@@ -30,23 +32,25 @@ class TodoControllerTest {
     @MockBean
     private TodoService todoService;
 
+    @WithMockUser(username = "1@naver.com", roles = "USER")
     @Test
     void todo_단건_조회에_성공한다() throws Exception {
         // given
         long todoId = 1L;
         String title = "title";
+        String email = "1@naver.com";
         String nickname = "nickname";
-        AuthUser authUser = new AuthUser(1L, "email", UserRole.USER, nickname);
-        User user = User.fromAuthUser(authUser);
-        UserResponse userResponse = new UserResponse(user.getId(), user.getEmail(), user.getNickname());
+        AuthUser authUser = new AuthUser(1L, email, UserRole.USER, nickname);
+        User user = new User(authUser.getId(), authUser.getEmail(), authUser.getUserRole(), authUser.getNickname());
+        UserDetailsImpl userDetails = new UserDetailsImpl(user);
+
+        UserResponse userResponse = new UserResponse(userDetails.getUserId(), userDetails.getUsername(), userDetails.getNickname());
         TodoResponse response = new TodoResponse(
                 todoId,
                 title,
                 "contents",
                 "Sunny",
-                userResponse,
-                LocalDateTime.now(),
-                LocalDateTime.now()
+                userResponse
         );
 
         // when
@@ -59,6 +63,7 @@ class TodoControllerTest {
                 .andExpect(jsonPath("$.title").value(title));
     }
 
+    @WithMockUser(username = "1@naver.com", roles = "USER")
     @Test
     void todo_단건_조회_시_todo가_존재하지_않아_예외가_발생한다() throws Exception {
         // given
