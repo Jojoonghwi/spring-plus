@@ -41,30 +41,29 @@ public class ManagerService {
 
         Todo todo = todoRepository.findById(todoId).orElseThrow(() ->
         {
-            saveLog("Todo not found", false, user.getId(), todoId);
+            logService.saveLog("Todo not found", false, user.getId(), todoId);
             return new InvalidRequestException("Todo not found");
         });
 
         if (todo.getUser() == null || !ObjectUtils.nullSafeEquals(user.getId(), todo.getUser().getId())) {
-            //logService.
-            saveLog("담당자를 등록하려고 하는 유저가 유효하지 않거나, 일정을 만든 유저가 아닙니다.", false, user.getId(), todoId);
+            logService.saveLog("담당자를 등록하려고 하는 유저가 유효하지 않거나, 일정을 만든 유저가 아닙니다.", false, user.getId(), todoId);
             throw new InvalidRequestException("담당자를 등록하려고 하는 유저가 유효하지 않거나, 일정을 만든 유저가 아닙니다.");
         }
 
         User managerUser = userRepository.findById(managerSaveRequest.getManagerUserId()).orElseThrow(() ->
         {
-            saveLog("등록하려고 하는 담당자 유저가 존재하지 않습니다.", false, user.getId(), todoId);
+            logService.saveLog("등록하려고 하는 담당자 유저가 존재하지 않습니다.", false, user.getId(), todoId);
             return new InvalidRequestException("등록하려고 하는 담당자 유저가 존재하지 않습니다.");
         });
 
         if (ObjectUtils.nullSafeEquals(user.getId(), managerUser.getId())) {
-            saveLog("일정 작성자는 본인을 담당자로 등록할 수 없습니다.", false, user.getId(), todoId);
+            logService.saveLog("일정 작성자는 본인을 담당자로 등록할 수 없습니다.", false, user.getId(), todoId);
             throw new InvalidRequestException("일정 작성자는 본인을 담당자로 등록할 수 없습니다.");
         }
 
         Manager newManagerUser = new Manager(managerUser, todo);
         Manager savedManagerUser = managerRepository.save(newManagerUser);
-        saveLog("매니저 등록에 성공했습니다", true, user.getId(), todoId);
+        logService.saveLog("매니저 등록에 성공했습니다", true, user.getId(), todoId);
 
         return new ManagerSaveResponse(
                 savedManagerUser.getId(),
@@ -108,11 +107,5 @@ public class ManagerService {
         }
 
         managerRepository.delete(manager);
-    }
-
-    //로그 저장
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void saveLog(String Msg, boolean isSuccessful, Long userId, Long todoId) {
-        logService.saveLog(Msg, isSuccessful, userId, todoId);
     }
 }
